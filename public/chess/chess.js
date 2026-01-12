@@ -4,8 +4,6 @@ const boardEl = document.getElementById('board');
 const turnEl = document.getElementById('turn-indicator');
 const graveyardWhite = document.getElementById('graveyard-white'); 
 const graveyardBlack = document.getElementById('graveyard-black'); 
-const scoreWhiteEl = document.getElementById('score-white');
-const scoreBlackEl = document.getElementById('score-black');
 const btnRestart = document.getElementById('btn-restart');
 
 let currentGameState = { turn: 'white', board: [] };
@@ -16,9 +14,8 @@ const piecesUnicode = {
     'p': '♟', 'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚',
 };
 
-// --- LOGICA DE XEQUE E XEQUE-MATE ---
+// --- LOGICA DE XEQUE ---
 
-// Acha a posição do Rei no tabuleiro
 function findKing(color, board) {
     const targetKing = (color === 'white') ? 'K' : 'k';
     for (let r = 0; r < 8; r++) {
@@ -29,7 +26,6 @@ function findKing(color, board) {
     return null;
 }
 
-// Verifica se uma posição específica está sendo atacada por alguém
 function isSquareAttacked(row, col, attackerColor, board) {
     for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
@@ -46,7 +42,6 @@ function isSquareAttacked(row, col, attackerColor, board) {
     return false;
 }
 
-// Verifica se o rei da cor informada está em Xeque
 function isInCheck(color, board) {
     const kingPos = findKing(color, board);
     if (!kingPos) return false;
@@ -54,28 +49,18 @@ function isInCheck(color, board) {
     return isSquareAttacked(kingPos.r, kingPos.c, opponentColor, board);
 }
 
-// Verifica se o jogador não tem movimentos válidos (Mate ou Afogamento)
 function hasNoLegalMoves(color, board) {
     for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
             const piece = board[r][c];
-            if (piece !== '') {
-                const isWhite = piece === piece.toUpperCase();
-                const pieceColor = isWhite ? 'white' : 'black';
-                
-                if (pieceColor === color) {
-                    // Testa cada casa do tabuleiro para ver se essa peça pode ir pra lá
-                    for (let tr = 0; tr < 8; tr++) {
-                        for (let tc = 0; tc < 8; tc++) {
-                            if (isValidMove(r, c, tr, tc, piece, board)) {
-                                // Simula o movimento
-                                const tempBoard = board.map(row => [...row]);
-                                tempBoard[tr][tc] = piece;
-                                tempBoard[r][c] = '';
-                                
-                                // Se esse movimento tira o rei do xeque, ainda há jogadas
-                                if (!isInCheck(color, tempBoard)) return false;
-                            }
+            if (piece !== '' && ((piece === piece.toUpperCase()) === (color === 'white'))) {
+                for (let tr = 0; tr < 8; tr++) {
+                    for (let tc = 0; tc < 8; tc++) {
+                        if (isValidMove(r, c, tr, tc, piece, board)) {
+                            const tempBoard = board.map(row => [...row]);
+                            tempBoard[tr][tc] = piece;
+                            tempBoard[r][c] = '';
+                            if (!isInCheck(color, tempBoard)) return false;
                         }
                     }
                 }
@@ -90,8 +75,6 @@ function isValidMove(fromR, fromC, toR, toC, piece, board) {
     if (fromR === toR && fromC === toC) return false;
     const target = board[toR][toC];
     const isWhite = piece === piece.toUpperCase();
-    
-    // Não pode bater na própria peça
     if (target !== '' && (target === target.toUpperCase()) === isWhite) return false;
 
     const dr = Math.abs(toR - fromR);
@@ -114,7 +97,6 @@ function isValidMove(fromR, fromC, toR, toC, piece, board) {
         if (p === 'r' && dr !== 0 && dc !== 0) return false;
         if (p === 'b' && dr !== dc) return false;
         if (p === 'q' && dr !== dc && dr !== 0 && dc !== 0) return false;
-
         const stepR = toR === fromR ? 0 : (toR > fromR ? 1 : -1);
         const stepC = toC === fromC ? 0 : (toC > fromC ? 1 : -1);
         let curR = fromR + stepR, curC = fromC + stepC;
@@ -127,11 +109,45 @@ function isValidMove(fromR, fromC, toR, toC, piece, board) {
     return false;
 }
 
+// --- LOGICA DA CPU ---
+function makeCPUMove() {
+    if (currentGameState.turn !== 'black') return;
+    let legalMoves = [];
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const piece = currentGameState.board[r][c];
+            if (piece !== '' && piece === piece.toLowerCase()) {
+                for (let tr = 0; tr < 8; tr++) {
+                    for (let tc = 0; tc < 8; tc++) {
+                        if (isValidMove(r, c, tr, tc, piece, currentGameState.board)) {
+                            const tempBoard = currentGameState.board.map(row => [...row]);
+                            tempBoard[tr][tc] = piece;
+                            tempBoard[r][c] = '';
+                            if (!isInCheck('black', tempBoard)) {
+                                legalMoves.push({ fromR: r, fromC: c, toR: tr, toC: tc, board: tempBoard });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (legalMoves.length > 0) {
+        const captures = legalMoves.filter(m => currentGameState.board[m.toR][m.toC] !== '');
+        const chosenMove = captures.length > 0 
+            ? captures[Math.floor(Math.random() * captures.length)] 
+            : legalMoves[Math.floor(Math.random() * legalMoves.length)];
+
+        setTimeout(() => {
+            socket.emit('makeMove', { board: chosenMove.board });
+        }, 1000);
+    }
+}
+
 // --- INTERAÇÃO ---
 function onSquareClick(row, col) {
     const piece = currentGameState.board[row][col];
-    const isMyTurn = (currentGameState.turn === 'white' && piece === piece.toUpperCase() && piece !== '') || 
-                     (currentGameState.turn === 'black' && piece === piece.toLowerCase() && piece !== '');
+    const isMyTurn = (currentGameState.turn === 'white' && piece === piece.toUpperCase() && piece !== '');
 
     if (!selectedSquare) {
         if (piece && isMyTurn) {
@@ -142,10 +158,7 @@ function onSquareClick(row, col) {
         const fromR = selectedSquare.row, fromC = selectedSquare.col;
         const movingPiece = currentGameState.board[fromR][fromC];
 
-        // 1. O movimento é fisicamente possível?
         if (isValidMove(fromR, fromC, row, col, movingPiece, currentGameState.board)) {
-            
-            // 2. Simula para ver se o movimento coloca o próprio rei em xeque (Regra Ilegal)
             const newBoard = currentGameState.board.map(r => [...r]);
             newBoard[row][col] = movingPiece;
             newBoard[fromR][fromC] = '';
@@ -153,7 +166,7 @@ function onSquareClick(row, col) {
             if (!isInCheck(currentGameState.turn, newBoard)) {
                 socket.emit('makeMove', { board: newBoard });
             } else {
-                alert("Movimento inválido: Você está em XEQUE!");
+                alert("Movimento inválido: Rei em XEQUE!");
             }
         }
         selectedSquare = null;
@@ -161,7 +174,41 @@ function onSquareClick(row, col) {
     }
 }
 
-// --- RENDERIZAÇÃO ---
+// --- RENDERIZAÇÃO E CEMITÉRIO ---
+function updateGraveyard() {
+    // Peças padrão que deveriam estar no tabuleiro
+    const startingPieces = {
+        'P': 8, 'R': 2, 'N': 2, 'B': 2, 'Q': 1, 'K': 1,
+        'p': 8, 'r': 2, 'n': 2, 'b': 2, 'q': 1, 'k': 1
+    };
+    
+    // Conta o que ainda está no tabuleiro
+    const currentCounts = {};
+    currentGameState.board.forEach(row => row.forEach(p => {
+        if(p) currentCounts[p] = (currentCounts[p] || 0) + 1;
+    }));
+
+    // Renderiza capturadas
+    graveyardWhite.innerHTML = '';
+    graveyardBlack.innerHTML = '';
+
+    for (let p in startingPieces) {
+        const diff = startingPieces[p] - (currentCounts[p] || 0);
+        for (let i = 0; i < diff; i++) {
+            const span = document.createElement('span');
+            span.className = 'dead-piece';
+            span.textContent = piecesUnicode[p];
+            if (p === p.toUpperCase()) {
+                span.style.color = 'white';
+                graveyardBlack.appendChild(span); // Brancas mortas vão para o painel das Pretas
+            } else {
+                span.style.color = 'black';
+                graveyardWhite.appendChild(span); // Pretas mortas vão para o painel das Brancas
+            }
+        }
+    }
+}
+
 function renderBoard() {
     boardEl.innerHTML = '';
     const whiteInCheck = isInCheck('white', currentGameState.board);
@@ -172,14 +219,14 @@ function renderBoard() {
             const sq = document.createElement('div');
             sq.className = `square ${(r + c) % 2 === 0 ? 'light' : 'dark'}`;
             
-            // Destaca o rei em vermelho se estiver em xeque
             if (piece === 'K' && whiteInCheck) sq.style.backgroundColor = '#ff4d4d';
             if (piece === 'k' && blackInCheck) sq.style.backgroundColor = '#ff4d4d';
 
             if (piece) {
                 const span = document.createElement('span');
                 span.className = 'piece';
-                span.style.color = piece === piece.toUpperCase() ? '#fff' : '#000';
+                // VOLTOU PARA PRETO E BRANCO:
+                span.style.color = piece === piece.toUpperCase() ? 'white' : 'black';
                 span.textContent = piecesUnicode[piece];
                 sq.appendChild(span);
             }
@@ -188,36 +235,31 @@ function renderBoard() {
             boardEl.appendChild(sq);
         });
     });
+    updateGraveyard();
 }
 
 function updateGameInfo() {
     const turn = currentGameState.turn;
-    turnEl.textContent = `VEZ DAS ${turn === 'white' ? 'BRANCAS' : 'PRETAS'}`;
+    turnEl.textContent = turn === 'white' ? "SUA VEZ (BRANCAS)" : "CPU PENSANDO...";
     
-    // Verifica se o jogo acabou
     if (isInCheck(turn, currentGameState.board)) {
         if (hasNoLegalMoves(turn, currentGameState.board)) {
             const winner = turn === 'white' ? 'PRETAS' : 'BRANCAS';
             turnEl.textContent = `XEQUE-MATE! VITÓRIA DAS ${winner}`;
-            turnEl.style.color = "var(--neon-red)";
         } else {
             turnEl.textContent += " (XEQUE!)";
         }
     }
+    if (turn === 'black') makeCPUMove();
 }
 
-// --- SOCKETS ---
 if (socket) {
     socket.on('gameState', (state) => {
         currentGameState = state;
         renderBoard();
         updateGameInfo();
     });
-    
     btnRestart.onclick = () => {
-        if(confirm("Reiniciar a partida para todos?")) {
-            turnEl.style.color = "white";
-            socket.emit('restartGame');
-        }
+        if(confirm("Reiniciar a partida?")) socket.emit('restartGame');
     };
 }
