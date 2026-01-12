@@ -5,7 +5,12 @@ const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Permite conexões de qualquer origem quando estiver online
+        methods: ["GET", "POST"]
+    }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -69,7 +74,6 @@ io.on('connection', (socket) => {
     // --- LÓGICA DAMAS ---
     socket.on('makeMoveCheckers', (state) => {
         checkersGameState = state;
-        // Não trocamos o turno aqui porque o checkers.js já faz isso antes de emitir
         io.emit('checkersGameState', checkersGameState);
     });
 
@@ -83,12 +87,20 @@ io.on('connection', (socket) => {
         io.emit('chatMessage', msgData);
     });
 
+    // --- CHAT ESPECÍFICO DAMAS ---
+    socket.on('checkersChatMsg', (msg) => {
+        io.emit('checkersChatMsg', msg);
+    });
+
     socket.on('disconnect', () => {
         console.log(`❌ Usuário desconectado: ${socket.id}`);
     });
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`\n🎮 LUDINODE ONLINE: http://localhost:${PORT}`);
+// AJUSTE PARA DEPLOY: Usa a porta da hospedagem ou 3000 localmente
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n🎮 LUDINODE ONLINE`);
+    console.log(`🏠 Local: http://localhost:${PORT}`);
 });

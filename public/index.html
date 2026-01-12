@@ -3,121 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LudiNode Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>LudiNode - Taverna de Jogos</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f0f13;
-            --neon: #00f2fe;
-            --purple: #7d2ae8;
+            --stone: #2c2c2c;
+            --wood: #4e2e1e;
+            --gold: #d4af37;
+            --parchment: #e4d5b7;
         }
         
+        /* Ajuste para travar a tela e evitar scroll */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; 
+        }
+
         body {
-            background: var(--bg);
-            color: white;
-            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: var(--parchment);
+            font-family: 'MedievalSharp', cursive;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
+            justify-content: space-between; /* Distribui Título, Cards e Footer */
         }
 
         h1 {
-            margin-bottom: 50px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--neon);
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            font-family: 'Cinzel', serif;
+            margin: 2vh 0 0 0; 
+            font-size: clamp(2rem, 5vh, 3rem); 
+            color: var(--gold);
+            /* Contorno preto para o título principal */
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 3px  3px 5px #000;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
-            max-width: 1200px; /* Aumentado para caber 5 cards melhor */
-            padding: 20px;
+            align-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            width: 95%;
+            flex: 1; 
         }
 
         .card {
-            width: 200px;
-            height: 280px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #333;
-            border-radius: 15px;
+            width: clamp(140px, 15vw, 170px); 
+            height: clamp(200px, 35vh, 240px);
+            background: var(--wood);
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            border: 6px ridge #180e08;
+            border-radius: 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             text-decoration: none;
-            color: white;
+            color: var(--parchment);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             position: relative;
-            overflow: hidden;
         }
 
         .card:hover {
-            border-color: var(--neon);
-            transform: translateY(-15px);
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         .card .icon {
-            font-size: 70px;
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-
-        .card:hover .icon {
-            transform: scale(1.1);
+            font-size: clamp(40px, 8vh, 60px);
+            margin-bottom: 10px;
+            filter: drop-shadow(2px 4px 4px black);
         }
 
         .card h2 {
+            font-family: 'Cinzel', serif;
             font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             margin: 0;
-            font-weight: 700;
+            color: var(--gold);
+            text-align: center;
+            /* CONTORNO PRETO PARA DESTAQUE NOS CARDS */
+            text-shadow: 
+                -1.5px -1.5px 0 #000,  
+                 1.5px -1.5px 0 #000,
+                -1.5px  1.5px 0 #000,
+                 1.5px  1.5px 0 #000;
         }
 
-        .card::after {
-            content: '';
-            position: absolute;
-            bottom: 40px;
-            width: 40px;
-            height: 2px;
-            background: var(--neon);
-            opacity: 0.3;
+        /* --- FOOTER AJUSTADO --- */
+        footer {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 0;
+            border-top: 2px double var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        }
+
+        footer p {
+            margin: 2px 0;
+            font-size: 0.9rem;
+            color: var(--parchment);
+        }
+
+        footer .dev-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer .dev-name {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            /* CONTORNO PRETO PARA O NOME NO RODAPÉ */
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000;
+        }
+
+        footer .version {
+            font-size: 0.7rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
 
-    <h1>LudiNode Hub</h1>
+    <h1>LudiNode Arena</h1>
     
     <div class="container">
         <a href="/chess/index.html" class="card">
-            <div class="icon">♚</div>
+            <div class="icon">♟️</div>
             <h2>Xadrez</h2>
         </a>
 
         <a href="/damas/index.html" class="card">
-            <div class="icon">⚪</div>
+            <div class="icon">🛡️</div>
             <h2>Damas</h2>
         </a>
 
         <a href="/ludo/index.html" class="card">
-            <div class="icon">🎲</div>
+            <div class="icon">👑</div>
             <h2>Ludo</h2>
         </a>
 
         <a href="/domino/index.html" class="card">
-            <div class="icon">🁫</div>
+            <div class="icon">📜</div>
             <h2>Dominó</h2>
         </a>
 
@@ -126,6 +176,16 @@
             <h2>Baralho</h2>
         </a>
     </div>
+
+    <footer>
+        <div class="dev-container">
+            <span>❧</span>
+            <p>Obra de <span class="dev-name">Mariana Xavier</span></p>
+            <span>☙</span>
+        </div>
+        <p>© Anno Domini 2026 - LudiNode Hub</p>
+        <p class="version">V 1.0.4 - "A Taverna"</p>
+    </footer>
 
 </body>
 </html>
