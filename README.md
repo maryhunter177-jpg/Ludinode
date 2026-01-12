@@ -18,9 +18,10 @@ Uma plataforma interativa de jogos de tabuleiro e cartas desenvolvida com **Node
 - **Interface Neon**: Visual moderno com efeitos de brilho e texturas realistas.
 - **Lógica Avançada**: No jogo de Damas, o sistema identifica jogadas obrigatórias e destaca as peças com alertas visuais.
 - **Chat Integrado**: Comunicação entre jogadores durante a partida.
-
+[
 ## 🔧 Como rodar localmente
 1. Clone o repositório: `git clone https://github.com/maryhunter177-jpg/Ludinode.git`
 2. Instale as dependências: `npm install`
 3. Inicie o servidor: `node server.js`
-4. Acesse no navegador: `http://localhost:3000`
+4. Acesse no navegador: `http://localhost:3000`]
+SITE OFICIAL RODANDO: https://ludinode.onrender.com
