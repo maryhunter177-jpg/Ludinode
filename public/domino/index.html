@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominó - LudiNode</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button onclick="location.href='../index.html'" style="position: absolute; top: 15px; left: 15px; z-index: 100; padding: 8px 15px; font-size: 0.8rem; background: var(--wood-dark); border: 1px solid var(--gold); color: var(--gold); cursor: pointer; border-radius: 5px; font-weight: bold;">
+        ⬅ VOLTAR AO HUB
+    </button>
+
+    <div class="arena-container">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
+            <div id="opp-hand-count" class="status-badge">Oponente: 7 peças | Monte: 14</div>
+            <div id="score-display" class="status-badge" style="border-color: var(--neon); color: white;">Você: 0 | CPU: 0</div>
+        </div>
+
+        <div id="game-board" class="board">
+            </div>
+
+        <div class="player-hand-container">
+            <div id="status-msg" style="font-weight: bold; margin-bottom: 5px;">Sua vez!</div>
+            
+            <div id="player-hand" class="hand">
+                </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button id="draw-btn">Comprar</button>
+                <button id="skip-btn">Passar Vez</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="domino.js"></script>
+</body>
+</html>

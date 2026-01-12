@@ -1,0 +1,229 @@
+:root {
+    --bg-dark: #0f0f13;
+    --panel-bg: rgba(30, 30, 35, 0.95);
+    --neon-blue: #00f2fe;
+    --neon-purple: #7d2ae8;
+    --neon-red: #ff3366;
+    --light-sq: #ebecd0;
+    --dark-sq: #779556;
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; 
+}
+
+.arena-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* --- PAINÉIS LATERAIS --- */
+.side-panel {
+    width: 320px;
+    height: 100%;
+    background: var(--panel-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 80px 20px 20px 20px;
+    z-index: 10;
+    border-right: 1px solid #333;
+}
+
+.right-panel { 
+    border-right: none; 
+    border-left: 1px solid #333; 
+}
+
+.player-card {
+    background: rgba(255,255,255,0.03);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    border: 2px solid var(--neon-blue);
+}
+
+/* --- ÁREA CENTRAL --- */
+.board-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    background: radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
+    padding: 15px 20px; 
+}
+
+.chess-title {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 75vh; 
+    height: 75vh;
+    max-width: 90%; 
+    border: 10px solid #252525;
+    border-radius: 4px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.9);
+    user-select: none;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8vh; 
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.square:hover {
+    filter: brightness(1.1);
+}
+
+/* --- PEÇAS COM DESTAQUE INTELIGENTE --- */
+.piece {
+    display: block;
+    line-height: 0;
+    pointer-events: none;
+    filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.3));
+    transition: transform 0.2s ease;
+}
+
+.square:hover .piece {
+    transform: scale(1.05);
+}
+
+/* BRANCAS: Contorno escuro */
+.piece[style*="color: white"], 
+.piece[style*="rgb(255, 255, 255)"],
+.piece:not([style*="black"]) {
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.7),  
+         1px -1px 0 rgba(0,0,0,0.7),
+        -1px  1px 0 rgba(0,0,0,0.7),
+         1px  1px 0 rgba(0,0,0,0.7);
+}
+
+/* PRETAS: Contorno claro */
+.piece[style*="color: black"],
+.piece[style*="rgb(0, 0, 0)"] {
+    text-shadow: 
+        -1px -1px 0 rgba(255,255,255,0.4),  
+         1px -1px 0 rgba(255,255,255,0.4),
+        -1px  1px 0 rgba(255,255,255,0.4),
+         1px  1px 0 rgba(255,255,255,0.4);
+}
+
+.light { background-color: var(--light-sq); }
+.dark { background-color: var(--dark-sq); }
+
+.highlight {
+    background-color: rgba(255, 255, 0, 0.5) !important;
+}
+
+/* --- UI --- */
+.btn-sair {
+    position: fixed; 
+    top: 20px; 
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 51, 102, 0.1); 
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.turn-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 30px;
+    background: rgba(15, 15, 19, 0.9);
+    border: 1px solid var(--neon-blue);
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 1000;
+}
+
+.chat-container {
+    height: 280px; 
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: auto; 
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 0.85rem;
+}
+
+.chat-input-area {
+    display: flex;
+    border-top: 1px solid #333;
+}
+
+.chat-input-area input {
+    flex: 1;
+    background: #0f0f0f;
+    border: none;
+    color: white;
+    padding: 12px;
+    outline: none;
+}
+
+.dead-piece {
+    font-size: 1.5rem;
+    margin-right: 2px;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.5));
+}

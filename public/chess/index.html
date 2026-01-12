@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LudiNode Arena - Xadrez</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="../index.html" class="btn-sair">← Sair para o Hub</a>
+
+    <div class="turn-indicator" id="turn-indicator">Aguardando...</div>
+
+    <div class="arena-container">
+        <div class="side-panel">
+            <div class="player-card">
+                <div class="avatar">♟</div>
+                <h3 style="color: var(--neon-blue);">BRANCAS</h3>
+                <div id="score-white" style="font-size: 1.2rem; font-weight: bold; color: var(--neon-blue);">0</div>
+                <div id="timer-white" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;">10:00</div>
+                <div id="graveyard-white" style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px; min-height: 20px;"></div>
+            </div>
+        </div>
+
+        <div class="board-area">
+            <div class="chess-title">
+                LUDINODE ARENA 
+                <span id="room-id-display" style="font-size: 0.5em; color: #555; vertical-align: middle;">#CHESS-PRO</span>
+            </div>
+            <div id="board" class="board"></div>
+            <p id="status" style="margin-top: 25px; color: #aaa; font-size: 0.9rem; font-weight: bold;">Status: Ativo</p>
+        </div>
+
+        <div class="side-panel right-panel">
+            <div class="player-card">
+                <div class="avatar" style="border-color: var(--neon-red);">♜</div>
+                <h3 style="color: var(--neon-red);">PRETAS</h3>
+                <div id="score-black" style="font-size: 1.2rem; font-weight: bold; color: var(--neon-red);">0</div>
+                <div id="timer-black" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;">10:00</div>
+                <div id="graveyard-black" style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px; min-height: 20px;"></div>
+                
+                <button id="btn-invert" style="margin-top:15px; background:transparent; border:1px solid #555; color:#888; padding:5px 15px; border-radius:20px; cursor:pointer; font-size: 0.8rem;">
+                    Inverter Visão ↻
+                </button>
+
+                <button id="btn-restart" style="margin-top:10px; background:rgba(255,0,0,0.1); border:1px solid #ff4444; color:#ff4444; padding:5px 15px; border-radius:20px; cursor:pointer; font-size: 0.8rem; font-weight:bold;">
+                    Reiniciar Jogo ⟲
+                </button>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <button id="btn-send" style="display:none;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chess.js"></script>
+</body>
+</html>

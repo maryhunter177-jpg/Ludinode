@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludinode Arena - Damas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="../index.html" class="btn-sair">← Sair para o Hub</a>
+    
+    <div id="turn-indicator" class="turn-indicator">VEZ DAS BRANCAS</div>
+
+    <div class="arena-container">
+        <div class="side-panel">
+            <div class="player-card">
+                <div class="avatar">⚪</div>
+                <h3 style="color: var(--neon-blue)">BRANCAS</h3>
+                <div id="score-white" class="score">Restam: 12</div>
+            </div>
+            <button id="btn-restart" class="btn-restart-action">Reiniciar Jogo</button>
+        </div>
+
+        <div class="board-area">
+            <h1 class="chess-title">Damas Pro</h1>
+            <div id="board" class="board"></div>
+            <p id="status" style="margin-top: 15px; font-size: 0.9rem; color: #888;">Status: Ativo</p>
+        </div>
+
+        <div class="side-panel right-panel">
+            <div class="player-card">
+                <div class="avatar" style="border-color: #a855f7">⚫</div>
+                <h3 style="color: #a855f7">PRETAS</h3>
+                <div id="score-black" class="score">Restam: 12</div>
+            </div>
+
+            <div class="chat-wrapper">
+                <div id="chat-messages" class="chat-messages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <button id="chat-send">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="checkers.js"></script>
+</body>
+</html>

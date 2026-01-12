@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LudiNode Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f13;
+            --neon: #00f2fe;
+            --purple: #7d2ae8;
+        }
+        
+        body {
+            background: var(--bg);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--neon);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px; /* Aumentado para caber 5 cards melhor */
+            padding: 20px;
+        }
+
+        .card {
+            width: 200px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #333;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--neon);
+            transform: translateY(-15px);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .card .icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.1);
+        }
+
+        .card h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            width: 40px;
+            height: 2px;
+            background: var(--neon);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LudiNode Hub</h1>
+    
+    <div class="container">
+        <a href="/chess/index.html" class="card">
+            <div class="icon">♚</div>
+            <h2>Xadrez</h2>
+        </a>
+
+        <a href="/damas/index.html" class="card">
+            <div class="icon">⚪</div>
+            <h2>Damas</h2>
+        </a>
+
+        <a href="/ludo/index.html" class="card">
+            <div class="icon">🎲</div>
+            <h2>Ludo</h2>
+        </a>
+
+        <a href="/domino/index.html" class="card">
+            <div class="icon">🁫</div>
+            <h2>Dominó</h2>
+        </a>
+
+        <a href="/cards/index.html" class="card">
+            <div class="icon">🃏</div>
+            <h2>Baralho</h2>
+        </a>
+    </div>
+
+</body>
+</html>
