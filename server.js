@@ -12,6 +12,7 @@ const io = new Server(server, {
     }
 });
 
+// Serve os arquivos estáticos da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --- ESTADOS INICIAIS ---
@@ -100,7 +101,8 @@ io.on('connection', (socket) => {
 // AJUSTE PARA DEPLOY: Usa a porta da hospedagem ou 3000 localmente
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, '0.0.0.0', () => {
+// IMPORTANTE: Em deploy (Render), não especificar '0.0.0.0' às vezes ajuda na estabilidade do binding
+server.listen(PORT, () => {
     console.log(`\n🎮 LUDINODE ONLINE`);
-    console.log(`🏠 Local: http://localhost:${PORT}`);
+    console.log(`🏠 Porta: ${PORT}`);
 });
