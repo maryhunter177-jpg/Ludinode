@@ -3,7 +3,7 @@
     --gold: #c5a059;
     --wood: #2a1b18;
     --felt-gradient: radial-gradient(circle, #1a5c1a 0%, #0a2b0a 100%);
-    --glass: rgba(15, 15, 20, 0.85);
+    --glass: rgba(15, 15, 20, 0.95);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,16 +37,38 @@ body {
 /* Stage Layout */
 .main-stage { display: flex; flex: 1; width: 100%; position: relative; }
 
-/* Sidebar Design (Letras Bonitas) */
+/* Sidebar Design */
 .glass-sidebar {
-    width: 270px;
+    width: 320px; 
     background: var(--glass);
     backdrop-filter: blur(15px);
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 100;
+    height: 100%;
 }
+
+/* Container de Publicidade no Topo */
+.ad-sidebar-top {
+    width: 300px;
+    height: 250px; 
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* Container com Scroll para o conteúdo que sobrou */
+.sidebar-content-scroll {
+    flex: 1;
+    overflow-y: auto;
+}
+
 .sidebar-header {
     padding: 15px;
     font-family: 'Orbitron';
@@ -58,28 +80,28 @@ body {
 }
 
 /* Stat Cards */
-.stats-group { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+.stats-group { padding: 10px 20px; display: flex; flex-direction: column; gap: 10px; }
 .stat-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
     text-align: center;
 }
 .stat-card.cyan .stat-value { color: var(--primary); text-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
-.stat-label { font-size: 0.65rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 2px; display: block; margin-bottom: 5px; }
-.stat-value { font-family: 'Orbitron'; font-size: 1.8rem; }
-.stat-value.small { font-size: 1.2rem; }
+.stat-label { font-size: 0.6rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 2px; display: block; margin-bottom: 2px; }
+.stat-value { font-family: 'Orbitron'; font-size: 1.5rem; }
+.stat-value.small { font-size: 1rem; }
 
-/* Viewport & Table 3D */
+/* Viewport & Table */
 .viewport { flex: 1; position: relative; display: flex; flex-direction: column; }
 .table-container { flex: 1; perspective: 1300px; display: flex; align-items: center; justify-content: center; }
 .blackjack-table {
-    width: 105%; /* Garante que cubra as laterais */
-    height: 95%;
+    width: 95%;
+    height: 85%;
     background: var(--wood);
     border-radius: 1000px;
-    transform: rotateX(22deg);
+    transform: rotateX(20deg);
     padding: 12px;
     box-shadow: 0 60px 100px rgba(0,0,0,0.9), inset 0 0 50px #000;
     border: 4px solid #1a110f;
@@ -89,20 +111,20 @@ body {
     background: var(--felt-gradient);
     border-radius: 1000px;
     display: flex; flex-direction: column; justify-content: space-around;
-    padding: 40px; box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
+    padding: 30px; box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
 }
 
 /* Card Area */
-.card-area { display: flex; gap: 12px; justify-content: center; min-height: 140px; }
-.felt-label { text-align: center; font-size: 0.65rem; color: rgba(255,255,255,0.2); letter-spacing: 6px; margin: 10px; }
+.card-area { display: flex; gap: 12px; justify-content: center; min-height: 120px; align-items: center; }
+.felt-label { text-align: center; font-size: 0.6rem; color: rgba(255,255,255,0.2); letter-spacing: 6px; margin: 5px; }
 
 /* HUD Controls */
-.game-hud { position: absolute; bottom: 40px; width: 100%; text-align: center; z-index: 500; }
-#status-msg { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 20px; text-shadow: 0 2px 10px #000; }
-.hud-btns { display: flex; gap: 15px; justify-content: center; }
+.game-hud { position: absolute; bottom: 20px; width: 100%; text-align: center; z-index: 500; }
+#status-msg { font-size: 1rem; letter-spacing: 2px; margin-bottom: 15px; text-shadow: 0 2px 10px #000; }
+.hud-btns { display: flex; gap: 12px; justify-content: center; }
 .hud-btn {
-    padding: 12px 30px; border: none; border-radius: 4px; cursor: pointer;
-    font-family: 'Orbitron'; font-size: 0.8rem; font-weight: bold; transition: 0.3s;
+    padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer;
+    font-family: 'Orbitron'; font-size: 0.75rem; font-weight: bold; transition: 0.3s;
 }
 .hud-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
 .hit { background: #228b22; color: #fff; }
@@ -110,18 +132,46 @@ body {
 .reset { background: #ff3d00; color: #fff; }
 
 /* Chat List */
-.chat-list { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85rem; color: #aaa; line-height: 1.6; }
-.chat-list b { color: var(--primary); }
+.chat-list { 
+    flex: 1; 
+    padding: 15px;
+    overflow-y: auto; 
+    font-size: 0.8rem; 
+    color: #fff; 
+    background: rgba(0,0,0,0.2);
+    min-height: 100px;
+}
 .chat-input-box { display: flex; padding: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); background: #000; }
 #chat-input { flex: 1; background: #111; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 4px; font-size: 0.85rem; }
 #chat-send { background: var(--primary); border: none; color: #000; padding: 0 15px; margin-left: 8px; border-radius: 4px; cursor: pointer; }
 
-/* Card Styling */
+/* --- CORREÇÃO VISUAL DAS CARTAS --- */
 .playing-card {
-    width: 90px; height: 130px; background: #fff; border-radius: 6px; color: #000;
-    padding: 10px; display: flex; flex-direction: column; justify-content: space-between;
-    font-weight: bold; box-shadow: 0 15px 30px rgba(0,0,0,0.6);
-    transform: translateZ(40px); animation: deal 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    width: 75px;
+    height: 105px;
+    background: #ffffff !important; /* Cor real da carta */
+    color: #000; /* Texto preto por padrão */
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+    position: relative;
+    border: 1px solid #ccc;
 }
-@keyframes deal { from { transform: translateY(-600px) translateZ(100px); opacity: 0; } }
-.playing-card.red { color: #d32f2f; }
+
+/* Lógica de cores para os naipes */
+.playing-card:contains('♥'), .playing-card:contains('♦') { color: #ff0000 !important; }
+/* Se seu JS injeta os símbolos diretamente, as regras abaixo garantem a cor vermelha */
+.playing-card { color: #000; } /* Preto para ♠ e ♣ */
+
+/* Ajuste específico para os símbolos dentro da carta */
+.playing-card span { display: block; } 
+
+/* Responsividade de Ads */
+@media (max-width: 1250px) or (max-height: 700px) {
+    .ad-sidebar-top { display: none; }
+}

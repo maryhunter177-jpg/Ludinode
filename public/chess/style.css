@@ -52,7 +52,7 @@ body {
     padding: 15px;
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,6 +68,25 @@ body {
     align-items: center;
     font-size: 28px;
     border: 2px solid var(--neon-blue);
+}
+
+/* --- ESTILO DOS ANÚNCIOS (AJUSTADO PARA 300x250) --- */
+.ad-sidebar-neon {
+    width: 100%;
+    height: 250px; /* Altura exata do seu script */
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 242, 254, 0.4);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    overflow: hidden;
 }
 
 /* --- ÁREA CENTRAL --- */
@@ -119,7 +138,6 @@ body {
     filter: brightness(1.1);
 }
 
-/* --- PEÇAS COM DESTAQUE INTELIGENTE --- */
 .piece {
     display: block;
     line-height: 0;
@@ -132,25 +150,17 @@ body {
     transform: scale(1.05);
 }
 
-/* BRANCAS: Contorno escuro */
+/* BRANCAS */
 .piece[style*="color: white"], 
 .piece[style*="rgb(255, 255, 255)"],
 .piece:not([style*="black"]) {
-    text-shadow: 
-        -1px -1px 0 rgba(0,0,0,0.7),  
-         1px -1px 0 rgba(0,0,0,0.7),
-        -1px  1px 0 rgba(0,0,0,0.7),
-         1px  1px 0 rgba(0,0,0,0.7);
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.7), 1px -1px 0 rgba(0,0,0,0.7), -1px 1px 0 rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.7);
 }
 
-/* PRETAS: Contorno claro */
+/* PRETAS */
 .piece[style*="color: black"],
 .piece[style*="rgb(0, 0, 0)"] {
-    text-shadow: 
-        -1px -1px 0 rgba(255,255,255,0.4),  
-         1px -1px 0 rgba(255,255,255,0.4),
-        -1px  1px 0 rgba(255,255,255,0.4),
-         1px  1px 0 rgba(255,255,255,0.4);
+    text-shadow: -1px -1px 0 rgba(255,255,255,0.4), 1px -1px 0 rgba(255,255,255,0.4), -1px 1px 0 rgba(255,255,255,0.4), 1px 1px 0 rgba(255,255,255,0.4);
 }
 
 .light { background-color: var(--light-sq); }
@@ -191,7 +201,7 @@ body {
 }
 
 .chat-container {
-    height: 280px; 
+    height: 180px; 
     background: #111;
     border: 1px solid #333;
     border-radius: 8px;
@@ -226,4 +236,9 @@ body {
     font-size: 1.5rem;
     margin-right: 2px;
     filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.5));
+}
+
+/* Responsividade para sumir ads em telas pequenas */
+@media (max-width: 1000px) or (max-height: 700px) {
+    .ad-sidebar-neon { display: none; }
 }

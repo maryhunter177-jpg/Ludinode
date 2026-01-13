@@ -2,21 +2,82 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>LudiNode Ludo</title>
+    <title>LudiNode Ludo - Arena Medieval</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="/" class="btn-sair">Sair do Jogo</a>
+    <header class="navbar-ludo">
+        <a href="/" class="btn-sair">SAIR DA TAVERNA</a>
+        <h1>LUDINODE LUDO</h1>
+    </header>
 
-    <h1>LudiNode Ludo</h1>
-    
-    <div id="ludo-board" class="ludo-board"></div>
-    
-    <div class="controls">
-        <div id="dice" class="dice">?</div>
-        <button id="roll-btn">LANÇAR DADO</button>
-        <p id="status">Aguardando jogada...</p>
-    </div>
+    <main class="game-container">
+        <aside class="sidebar-medieval">
+            <div class="ad-slot-medieval">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'c05631446f72d7351cfa2f06edf4a803',
+                        'format' : 'iframe',
+                        'height' : 300,
+                        'width' : 160,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/c05631446f72d7351cfa2f06edf4a803/invoke.js"></script>
+            </div>
+            <div class="scroll-content">
+                <h3 class="medieval-label">REGRAS DA CASA</h3>
+                <ul class="medieval-rules" style="font-size: 0.75rem; padding-left: 15px; list-style: none; margin-bottom: 20px;">
+                    <li>• Role <b>6</b> para sair da base.</li>
+                    <li>• Complete <b>52 casas</b> para vencer.</li>
+                    <li>• Chegada exige <b>número exato</b>.</li>
+                    <li>• Capture oponentes para atrasá-los.</li>
+                    <li>• 4 peças no centro = <b>VITÓRIA!</b></li>
+                </ul>
+
+                <h3 class="medieval-label">RANKING DA ARENA</h3>
+                <div id="ranking-container" style="font-family: 'MedievalSharp'; font-size: 0.9rem;">
+                    <div style="color: #ff4d4d;">VOCÊ: <span id="score-red">0</span>/4</div>
+                    <div style="color: #2ecc71;">VERDE: <span id="score-green">0</span>/4</div>
+                    <div style="color: #f1c40f;">AMARELO: <span id="score-yellow">0</span>/4</div>
+                    <div style="color: #3498db;">AZUL: <span id="score-blue">0</span>/4</div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="board-area">
+            <div id="ludo-board" class="ludo-board"></div>
+            
+            <div class="controls-medieval">
+                <div class="dice-container">
+                    <div id="dice" class="dice-medieval">?</div>
+                </div>
+                <button id="roll-btn">LANÇAR DADO</button>
+                <p id="status">Aguardando sua jogada...</p>
+            </div>
+        </section>
+
+        <aside class="sidebar-medieval">
+            <div class="ad-slot-medieval">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'c05631446f72d7351cfa2f06edf4a803',
+                        'format' : 'iframe',
+                        'height' : 300,
+                        'width' : 160,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/c05631446f72d7351cfa2f06edf4a803/invoke.js"></script>
+            </div>
+            <div class="log-wrapper">
+                <h3 class="medieval-label">CRÔNICAS DA ARENA</h3>
+                <div id="game-log" class="medieval-log">
+                </div>
+            </div>
+        </aside>
+    </main>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="ludo.js"></script>

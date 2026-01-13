@@ -30,6 +30,33 @@ body {
     margin-bottom: 20px;
 }
 
+/* CONTAINER PARA ALINHAR ADS + TABULEIRO */
+.arena-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+/* CLASSE DOS ANÚNCIOS LATERAIS (ESTILO NEON) */
+.ad-sidebar {
+    width: 160px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neon-blue);
+    font-size: 10px;
+    letter-spacing: 2px;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(8, 70px);
@@ -83,4 +110,8 @@ body {
     background: var(--neon-blue);
     color: #000;
     box-shadow: 0 0 15px var(--neon-blue);
+}
+
+@media (max-width: 1200px) {
+    .ad-sidebar { display: none; }
 }

@@ -1,5 +1,5 @@
 :root {
-    --bg-table: #1a472a; 
+    --bg-table: #1a472a;
     --ivory: #fdf5e6;    
     --ivory-dark: #e8dfcc;
     --wood-dark: #3e2723;
@@ -56,42 +56,42 @@ body {
     box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
 }
 
-.drop-zone {
-    min-width: 60px;
-    height: 60px;
-    border: 3px dashed rgba(212, 175, 55, 0.5);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.drop-zone:hover {
-    background: rgba(212, 175, 55, 0.3);
-    border-style: solid;
-    transform: scale(1.1);
-}
-
 .player-hand-container {
     background: rgba(0, 0, 0, 0.4);
     width: 100%;
-    padding: 20px;
+    padding: 10px 20px;
     border-top: 2px solid var(--gold);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    position: relative;
+    min-height: 270px; /* Aumentado para caber o ad de 250px de altura */
 }
+
+.ad-area-left, .ad-area-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px; /* Largura exata da sua nova tag */
+    height: 250px; /* Altura exata da sua nova tag */
+    border: 1px dashed rgba(212, 175, 55, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.ad-area-left { left: 20px; }
+.ad-area-right { right: 20px; }
 
 .hand {
     display: flex;
     gap: 12px;
     justify-content: center;
+    z-index: 5;
 }
 
 .domino-piece {
@@ -116,7 +116,6 @@ body {
 .board .domino-piece { width: 90px; height: 50px; flex-direction: row; }
 .board .domino-piece.double { width: 50px; height: 90px; flex-direction: column; }
 
-/* Grid de Bolinhas */
 .side {
     flex: 1;
     display: grid;
@@ -132,12 +131,11 @@ body {
     width: 80%;
     height: 80%;
     margin: auto;
-    visibility: hidden; /* Escondido por padrão */
+    visibility: hidden;
 }
 
 .dot.active { visibility: visible; }
 
-/* Divisores */
 .domino-piece.vertical .side:first-child { border-bottom: 2px solid rgba(0,0,0,0.1); }
 .domino-piece.horizontal .side:first-child { border-right: 2px solid rgba(0,0,0,0.1); }
 
@@ -153,3 +151,8 @@ button {
 
 button:hover { background: #5d4037; }
 #status-msg { color: var(--gold); text-transform: uppercase; }
+
+/* Esconde ads em telas menores que 1300px para não sobrepor as peças */
+@media (max-width: 1300px) {
+    .ad-area-left, .ad-area-right { display: none; }
+}
